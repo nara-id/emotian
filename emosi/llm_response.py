@@ -1,20 +1,16 @@
 import openai
-import os
 import json
 from pathlib import Path
-from dotenv import load_dotenv
+import streamlit as st
 
-# === Load API Key ===
-load_dotenv("emosi/API_Keys.env")  # Pastikan path benar
-api_key = os.getenv("OPENROUTER_API_KEY")
-
-# Konfigurasi OpenRouter
+# === Load API Key dan Base URL dari secrets ===
+api_key = st.secrets["OPENROUTER_API_KEY"]
 openai.api_key = api_key
 openai.api_base = "https://openrouter.ai/api/v1"
 
 def generate_llm_insight(prompt_path: str) -> dict:
     """
-    Mengirim prompt ke Mistral LLM via OpenRouter dan mengembalikan hasil narasi + insight dict.
+    Kirim prompt ke Mistral LLM via OpenRouter dan kembalikan insight dalam bentuk dict.
     """
     video_id = Path(prompt_path).stem.replace("prompt_", "")
 
@@ -31,9 +27,7 @@ def generate_llm_insight(prompt_path: str) -> dict:
             temperature=0.7,
             max_tokens=2000
         )
-
         content = response["choices"][0]["message"]["content"]
-
     except Exception as e:
         return {"error": f"Gagal menghubungi model: {e}"}
 
@@ -43,7 +37,7 @@ def generate_llm_insight(prompt_path: str) -> dict:
     with open(output_txt, "w", encoding="utf-8") as f:
         f.write(content)
 
-    # Coba parse ke dict
+    # Parsing JSON → dict (fallback jika bukan JSON)
     try:
         insight_dict = json.loads(content)
     except json.JSONDecodeError:
