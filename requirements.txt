@@ -5,7 +5,7 @@ pandas
 matplotlib
 wordcloud
 fpdf
-openai
+openai==0.28
 python-dotenv
 loguru
 jmespath
