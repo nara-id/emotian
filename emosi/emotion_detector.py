@@ -5,13 +5,14 @@ import json
 import re
 from tqdm import tqdm
 import os
+import streamlit as st
 
-token = os.getenv("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")  # pastikan diset lewat secrets
+hf_token = st.secrets["HF_TOKEN"]
+MODEL_REPO = st.secrets["MODEL_REPO"]
 
-MODEL_REPO = "fedwifa/ibemo"
+tokenizer = AutoTokenizer.from_pretrained(MODEL_REPO, token=hf_token)
+model = AutoModelForSequenceClassification.from_pretrained(MODEL_REPO, token=hf_token)
 
-tokenizer = AutoTokenizer.from_pretrained(MODEL_REPO, token=token)
-model = AutoModelForSequenceClassification.from_pretrained(MODEL_REPO, token=token)
 
 
 label_map = {i: label for i, label in enumerate([
