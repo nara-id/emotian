@@ -9,3 +9,4 @@ openai
 tiktok-comment-scrapper
 python-dotenv
 loguru
+jmespath
