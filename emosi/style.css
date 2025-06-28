@@ -1,0 +1,85 @@
+/* Mengubah font utama aplikasi */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+html, body, [class*="st-"] {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Menghilangkan padding atas dari halaman utama */
+.main .block-container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+/* Styling untuk sidebar */
+[data-testid="stSidebar"] {
+    background-color: #F8F9FA;
+}
+
+[data-testid="stSidebar"] h2 {
+    color: #1E293B;
+}
+
+/* Styling untuk metric cards kustom */
+.metric-card {
+    background-color: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: all 0.2s ease-in-out;
+}
+
+.metric-card:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+}
+
+.metric-card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 0.5rem;
+}
+
+.metric-card-value {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #1E293B;
+}
+
+/* Styling untuk st.info sebagai blockquote */
+[data-testid="stInfo"] {
+    background-color: #F8F9FA;
+    border-left: 5px solid #007BFF;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+}
+
+/* Styling untuk expander agar lebih modern */
+[data-testid="stExpander"] {
+    border: 1px solid #E2E8F0;
+    border-radius: 0.75rem;
+    background-color: #FFFFFF;
+}
+
+[data-testid="stExpander"] summary {
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+
+/* Styling untuk tombol agar lebih menonjol */
+[data-testid="stButton"] button {
+    background-color: #007BFF;
+    color: white;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    border: none;
+    transition: background-color 0.2s ease;
+}
+
+[data-testid="stButton"] button:hover {
+    background-color: #0056b3;
+    color: white;
+    border: none;
+}
