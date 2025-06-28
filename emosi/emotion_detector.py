@@ -4,11 +4,15 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import json
 import re
 from tqdm import tqdm
+import os
 
-MODEL_PATH = "emosi/model"
+token = os.getenv("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")  # pastikan diset lewat secrets
 
-tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH)
-model = AutoModelForSequenceClassification.from_pretrained(MODEL_PATH)
+MODEL_REPO = "fedwifa/ibemo"
+
+tokenizer = AutoTokenizer.from_pretrained(MODEL_REPO, token=token)
+model = AutoModelForSequenceClassification.from_pretrained(MODEL_REPO, token=token)
+
 
 label_map = {i: label for i, label in enumerate([
     "admiration", "amusement", "anger", "annoyance", "approval", "caring", "confusion", "curiosity",
