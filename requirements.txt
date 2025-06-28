@@ -6,7 +6,6 @@ matplotlib
 wordcloud
 fpdf
 openai
-tiktok-comment-scrapper
 python-dotenv
 loguru
 jmespath
