@@ -33,7 +33,7 @@ load_css("style.css")
 # --- Sidebar untuk Input ---
 with st.sidebar:
     # Ganti URL gambar ini jika Anda punya logo sendiri
-    st.image("emosi\emosi.png", width=210)
+    st.image(os.path.join("emosi", "emosi.png"), width=210)
     st.header("⚙️ Kontrol Analisis")
     video_url = st.text_input("🔗 Masukkan URL video TikTok:", placeholder="https://www.tiktok.com/@user/video/123...")
     process_button = st.button("🔍 Analisis Sekarang", use_container_width=True)
