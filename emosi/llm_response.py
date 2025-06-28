@@ -3,6 +3,7 @@ import os
 import json
 import streamlit as st
 from pathlib import Path
+from dotenv import load_dotenv
 
 # === Load API Key ===
 load_dotenv("emosi/API_Keys.env")
