@@ -4,34 +4,46 @@ import json
 from pathlib import Path
 from dotenv import load_dotenv
 
-# Load API key
-load_dotenv("emosi/API_Keys.env")
+# === Load API Key ===
+load_dotenv("emosi/API_Keys.env")  # Pastikan path benar
 api_key = os.getenv("OPENROUTER_API_KEY")
+
+# Konfigurasi OpenRouter
 openai.api_key = api_key
 openai.api_base = "https://openrouter.ai/api/v1"
 
 def generate_llm_insight(prompt_path: str) -> dict:
+    """
+    Mengirim prompt ke Mistral LLM via OpenRouter dan mengembalikan hasil narasi + insight dict.
+    """
     video_id = Path(prompt_path).stem.replace("prompt_", "")
 
     with open(prompt_path, encoding="utf-8") as f:
         prompt = f.read()
 
-    response = openai.ChatCompletion.create(
-        model="mistralai/mistral-7b-instruct",
-        messages=[
-            {"role": "system", "content": "Kamu adalah analis media sosial profesional."},
-            {"role": "user", "content": prompt}
-        ],
-        temperature=0.7,
-        max_tokens=2000
-    )
+    try:
+        response = openai.ChatCompletion.create(
+            model="mistralai/mistral-7b-instruct",
+            messages=[
+                {"role": "system", "content": "Kamu adalah analis media sosial profesional."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7,
+            max_tokens=2000
+        )
 
-    content = response["choices"][0]["message"]["content"]
+        content = response["choices"][0]["message"]["content"]
 
+    except Exception as e:
+        return {"error": f"Gagal menghubungi model: {e}"}
+
+    # Simpan hasil mentah
     output_txt = Path("emosi/output") / f"llm_insight_{video_id}.txt"
+    output_txt.parent.mkdir(parents=True, exist_ok=True)
     with open(output_txt, "w", encoding="utf-8") as f:
         f.write(content)
 
+    # Coba parse ke dict
     try:
         insight_dict = json.loads(content)
     except json.JSONDecodeError:
