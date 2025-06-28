@@ -3,21 +3,18 @@ import json
 import streamlit as st
 from pathlib import Path
 from dotenv import load_dotenv
-from openai import OpenAI  # versi baru OpenAI SDK
+import openai  # FIX: gunakan import openai, bukan from openai import OpenAI
 
 # === Load API Key ===
 load_dotenv("emosi/API_Keys.env")
 api_key = os.getenv("OPENROUTER_API_KEY")
 
-client = OpenAI(
+client = openai.OpenAI(  # FIXED: pakai openai.OpenAI
     api_key=api_key,
     base_url="https://openrouter.ai/api/v1"
 )
 
 def generate_llm_insight(prompt_path: str) -> dict:
-    """
-    Mengirim prompt ke LLM dan mengembalikan hasil narasi per grafik + insight dalam bentuk dict.
-    """
     video_id = Path(prompt_path).stem.replace("prompt_", "")
 
     with open(prompt_path, encoding="utf-8") as f:
@@ -35,12 +32,10 @@ def generate_llm_insight(prompt_path: str) -> dict:
 
     content = response.choices[0].message.content
 
-    # Simpan hasil mentah
     output_txt = Path("emosi/output") / f"llm_insight_{video_id}.txt"
     with open(output_txt, "w", encoding="utf-8") as f:
         f.write(content)
 
-    # Parsing hasil JSON dari string → dict
     try:
         insight_dict = json.loads(content)
     except json.JSONDecodeError:
