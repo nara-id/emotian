@@ -1,0 +1,10 @@
+streamlit
+transformers
+torch
+pandas
+matplotlib
+wordcloud
+fpdf
+openai
+tiktok-comment-scrapper
+python-dotenv
